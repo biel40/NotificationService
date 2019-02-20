@@ -35,7 +35,7 @@
             <artifactId>mailgun</artifactId>
             <version>1.9.0</version>
         </dependency>
-<<<<<<< HEAD
+
 
         <!-- https://mvnrepository.com/artifact/com.sun.jersey/jersey-client -->
         <dependency>
@@ -44,23 +44,17 @@
             <version>1.19.4</version>
         </dependency>
 
-=======
->>>>>>> 9df0012c1377fd37739ddad67001e7ca6e8f55cb
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<<<<<<< HEAD
+
 
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
         </dependency>
-
-
-
-=======
->>>>>>> 9df0012c1377fd37739ddad67001e7ca6e8f55cb
+        
     </dependencies>
 
     <build>
