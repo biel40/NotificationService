@@ -47,4 +47,9 @@ public class Notification {
     public void setSent(boolean sent) {
         this.sent = sent;
     }
+
+    @Override
+    public String toString() {
+        return "Notification " + this.date.toString();
+    }
 }
