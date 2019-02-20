@@ -27,7 +27,7 @@ public class NotificationController {
         con.setRequestProperty("User-Agent", Constants.USER_AGENT);
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-        String urlParameters = "receiver=sdofgndasng@gmail.com&subject=prueba&notification=test";
+        String urlParameters = "receiver=ivancaballero9717@gmail.com&subject=prueba&notification=test";
 
         // Send post request
         con.setDoOutput(true);
