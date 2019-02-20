@@ -10,16 +10,16 @@ import java.util.Date;
  * Created by tanin on 20/02/2019.
  */
 @NodeEntity
-public class Falta {
+public class Absence {
     @Id @GeneratedValue private Long id;
     private Date data;
     private String hora;
     private String assignatura;
 
-    private Falta(){
+    private Absence(){
     }
 
-    public Falta(Date data, String hora, String assignatura){
+    public Absence(Date data, String hora, String assignatura){
         this.data = data;
         this.hora = hora;
         this.assignatura = assignatura;
