@@ -12,16 +12,19 @@ import java.util.Set;
  * Created by tanin on 20/02/2019.
  */
 @NodeEntity
-public class Alumne {
+public class Student {
     @Id @GeneratedValue private Long id;
     private String DNI;
     private String name;
     private String surname;
 
-    private Alumne(){
+    @Relationship(type = "HAS", direction = Relationship.UNDIRECTED)
+    private Set<Absence> absences;
+
+    private Student(){
     }
 
-    public Alumne(String DNI, String name, String surname){
+    public Student(String DNI, String name, String surname){
         this.DNI = DNI;
         this.name = name;
         this.surname = surname;
@@ -59,14 +62,11 @@ public class Alumne {
         this.surname = surname;
     }
 
-    @Relationship(type = "HASFAULT", direction = Relationship.UNDIRECTED)
-    public Set<Falta> faltes;
-
-    public void teFaltes(Falta falta){
-        if(faltes == null){
-            faltes = new HashSet<>();
+    public void hasAbsence(Absence absence){
+        if(this.absences == null){
+            this.absences = new HashSet<>();
         }
-        faltes.add(falta);
+        this.absences.add(absence);
     }
 
 }

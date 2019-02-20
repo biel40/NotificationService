@@ -3,6 +3,10 @@ package com.servei.notifications_service.nodes;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by tanin on 20/02/2019.
@@ -11,6 +15,9 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class Professor {
     @Id @GeneratedValue private Long id;
     private String DNI, nom, cognom, mail, telefon;
+
+    @Relationship(type = "RECEIVE", direction = Relationship.UNDIRECTED)
+    private Set<Notification> notifications;
 
     private Professor(){
 
@@ -24,6 +31,12 @@ public class Professor {
         this.telefon = telefon;
     }
 
+    public void receiveNotifications(Notification notification){
+        if(this.notifications == null){
+            this.notifications = new HashSet<>();
+        }
+        this.notifications.add(notification);
+    }
 
     public Long getId() {
         return id;

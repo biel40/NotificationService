@@ -3,17 +3,23 @@ package com.servei.notifications_service.nodes;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by tanin on 20/02/2019.
- */
 @NodeEntity
 public class Notification {
     @Id @GeneratedValue private Long id;
     private Date date;
     private boolean sent;
+
+    @Relationship(type = "BELONGS_TO", direction = Relationship.UNDIRECTED)
+    private Set<Student> students;
+
+    @Relationship(type = "SEND_BY", direction = Relationship.UNDIRECTED)
+    private Set<Provider> providers;
 
     private Notification(){
 
@@ -52,4 +58,19 @@ public class Notification {
     public String toString() {
         return "Notification " + this.date.toString();
     }
+
+    public void belongsToStudent(Student student){
+        if(this.students == null){
+            this.students = new HashSet<>();
+        }
+        this.students.add(student);
+    }
+
+    public void sendByProvider(Provider provider){
+        if(this.providers == null){
+            this.providers = new HashSet<>();
+        }
+        this.providers.add(provider);
+    }
+
 }
