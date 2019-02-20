@@ -3,6 +3,11 @@ import net.sargue.mailgun.Mail;
 
 public class Mailer {
     private Body emailBody;
+
+    public Mailer() {
+
+    }
+
     public Mailer(Body emailBody) {
         this.emailBody = emailBody;
     }
@@ -17,4 +22,7 @@ public class Mailer {
         System.out.println("Email sent");
     }
 
+    public void setEmailBody(Body emailBody) {
+        this.emailBody = emailBody;
+    }
 }
