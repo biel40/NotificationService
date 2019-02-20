@@ -16,7 +16,7 @@ public class Body {
         this.configuration = new Configuration()
                 .domain(Constants.DOMAIN)
                 .apiKey(Constants.MAILGUN_API)
-                .from("Mailgun-Notifier","weeklynotificationesliceu@gmail.com");;
+                .from("Mailgun-Notifier","weeklynotificationesliceu@gmail.com");
     }
 
     public String getReceiver() {
