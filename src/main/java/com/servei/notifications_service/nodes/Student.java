@@ -21,14 +21,7 @@ public class Student {
     @Relationship(type = "HAS", direction = Relationship.UNDIRECTED)
     private Set<Absence> absences;
 
-    private Student(){
-    }
-
-    public Student(String DNI, String name, String surname){
-        this.DNI = DNI;
-        this.name = name;
-        this.surname = surname;
-    }
+    private Student(){}
 
     public Long getId() {
         return id;
@@ -69,6 +62,16 @@ public class Student {
         this.absences.add(absence);
     }
 
+    @Override
+    public String toString() {
+        return "student{" +
+                "id=" + id +
+                ", DNI='" + DNI + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", absences=" + absences +
+                '}';
+    }
 }
 
 

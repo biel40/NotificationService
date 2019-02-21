@@ -5,15 +5,15 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @NodeEntity
 public class Notification {
     @Id @GeneratedValue private Long id;
-    private Date date;
-    private boolean sent;
+    private String date;
+    private String time;
+    private boolean itWasSent;
 
     @Relationship(type = "BELONGS_TO", direction = Relationship.UNDIRECTED)
     private Set<Student> students;
@@ -21,14 +21,7 @@ public class Notification {
     @Relationship(type = "SEND_BY", direction = Relationship.UNDIRECTED)
     private Set<Provider> providers;
 
-    private Notification(){
-
-    }
-
-    public Notification(Date date, boolean sent){
-        this.date = date;
-        this.sent = sent;
-    }
+    public Notification(){}
 
     public Long getId() {
         return id;
@@ -38,25 +31,36 @@ public class Notification {
         this.id = id;
     }
 
-    public Date getDate() {
+    public boolean isItWasSent() {
+        return itWasSent;
+    }
+
+    public void setItWasSent(boolean itWasSent) {
+        this.itWasSent = itWasSent;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public boolean isSent() {
-        return sent;
+    public String getTime() {
+        return time;
     }
 
-    public void setSent(boolean sent) {
-        this.sent = sent;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    @Override
-    public String toString() {
-        return "Notification " + this.date.toString();
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public Set<Provider> getProviders() {
+        return providers;
     }
 
     public void belongsToStudent(Student student){
@@ -73,4 +77,15 @@ public class Notification {
         this.providers.add(provider);
     }
 
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", itWasSent=" + itWasSent +
+                ", students=" + students +
+                ", providers=" + providers +
+                '}';
+    }
 }

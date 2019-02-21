@@ -1,5 +1,6 @@
 package com.servei.notifications_service.nodes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -12,24 +13,15 @@ import java.util.Set;
  * Created by tanin on 20/02/2019.
  */
 @NodeEntity
-public class Professor {
+public class Teacher {
     @Id @GeneratedValue private Long id;
-    private String DNI, nom, cognom, mail, telefon;
+    private String DNI, name, surname, mail, phoneNum;
 
     @Relationship(type = "RECEIVE", direction = Relationship.UNDIRECTED)
+    @JsonProperty("notifications")
     private Set<Notification> notifications;
 
-    private Professor(){
-
-    }
-
-    public Professor(String DNI, String nom, String cognom, String mail, String telefon){
-        this.DNI = DNI;
-        this.nom = nom;
-        this.cognom = cognom;
-        this.mail = mail;
-        this.telefon = telefon;
-    }
+    public Teacher(){}
 
     public void receiveNotifications(Notification notification){
         if(this.notifications == null){
@@ -54,20 +46,20 @@ public class Professor {
         this.DNI = DNI;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCognom() {
-        return cognom;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setCognom(String cognom) {
-        this.cognom = cognom;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getMail() {
@@ -78,11 +70,24 @@ public class Professor {
         this.mail = mail;
     }
 
-    public String getTelefon() {
-        return telefon;
+    public String getPhoneNum() {
+        return phoneNum;
     }
 
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    @Override
+    public String toString() {
+        return "teacher{" +
+                "id=" + id +
+                ", DNI='" + DNI + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", mail='" + mail + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", notifications=" + notifications +
+                '}';
     }
 }

@@ -6,24 +6,13 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 import java.util.Date;
 
-/**
- * Created by tanin on 20/02/2019.
- */
 @NodeEntity
 public class Absence {
     @Id @GeneratedValue private Long id;
-    private Date data;
-    private String hora;
-    private String assignatura;
+    private Date date;
+    private String subject;
 
-    private Absence(){
-    }
-
-    public Absence(Date data, String hora, String assignatura){
-        this.data = data;
-        this.hora = hora;
-        this.assignatura = assignatura;
-    }
+    private Absence(){}
 
     public Long getId() {
         return id;
@@ -33,27 +22,28 @@ public class Absence {
         this.id = id;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public String getHora() {
-        return hora;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setHora(String hora) {
-        this.hora = hora;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
-    public String getAssignatura() {
-        return assignatura;
-    }
-
-    public void setAssignatura(String assignatura) {
-        this.assignatura = assignatura;
+    @Override
+    public String toString() {
+        return "absence{" +
+                "id=" + id +
+                ", date=" + date +
+                ", subject='" + subject + '\'' +
+                '}';
     }
 }

@@ -13,11 +13,14 @@ public class Provider {
     @Id @GeneratedValue private Long id;
     private String name;
 
-    private Provider(){
+    private Provider(){}
+
+    public Long getId() {
+        return id;
     }
 
-    public Provider(String name){
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -26,5 +29,13 @@ public class Provider {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "provider{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
