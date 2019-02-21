@@ -6,20 +6,15 @@ import com.servei.notifications_service.models.SentMail;
 import com.servei.notifications_service.nodes.*;
 import com.servei.notifications_service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.rmi.CORBA.Stub;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @RestController
 public class NotificationController {
@@ -48,17 +43,9 @@ public class NotificationController {
 
     @RequestMapping(value = "/sendmail")
     public void sendmail() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        Teacher teacher = getTeacher();
 
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("receiver", "ivancaballero9717@gmail.com");
-        map.add("subject", "Hola que ase");
-        map.add("notification", "test");
-
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-
-        SentMail response = restTemplate.postForObject(Constants.URL_MAILGUN, request, SentMail.class);
+        SentMail response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
 
     }
 
