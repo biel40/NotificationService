@@ -2,7 +2,7 @@ package com.servei.notifications_service;
 
 
 import com.servei.notifications_service.models.Constants;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.servei.notifications_service.models.SentMail;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

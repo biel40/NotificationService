@@ -1,4 +1,4 @@
-package com.servei.notifications_service;
+package com.servei.notifications_service.models;
 
 import java.util.Date;
 
