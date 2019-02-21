@@ -1,6 +1,5 @@
 package com.servei.notifications_service;
 
-
 import com.servei.notifications_service.models.Constants;
 import com.servei.notifications_service.models.SentMail;
 import com.servei.notifications_service.nodes.*;

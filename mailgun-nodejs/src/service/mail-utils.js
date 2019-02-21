@@ -2,13 +2,14 @@ const settings = require("./../model/settings.js");
 const mailgun = require("mailgun-js")(settings);
 const sender = 'Weekly Notifications <weeklynotifications@gmail.com>';
 const format = require('./formatter.js');
-module.exports = function ({mail, name, surname, notifications}) {
+
+module.exports = function (teacher) {
     return new Promise(function(res, rej) {
         const data = {
             from: sender,
-            to: mail,
-            subject: `Weekly notification for ${name} ${surname}`,
-            html: format(notifications).toHtml()
+            to: teacher.mail,
+            subject: `Weekly notification for ${teacher.name} ${teacher.surname}`,
+            html: format(teacher).toHtml()
         };
         mailgun.messages().send(data, function (error, body) {
             if (error) {
