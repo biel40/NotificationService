@@ -1,5 +1,6 @@
 package com.servei.notifications_service.nodes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -16,9 +17,11 @@ public class Notification {
     private boolean itWasSent;
 
     @Relationship(type = "BELONGS_TO", direction = Relationship.UNDIRECTED)
+    @JsonProperty
     private Set<Student> students;
 
     @Relationship(type = "SEND_BY", direction = Relationship.UNDIRECTED)
+    @JsonProperty
     private Set<Provider> providers;
 
     public Notification(){}

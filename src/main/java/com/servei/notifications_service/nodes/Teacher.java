@@ -18,7 +18,7 @@ public class Teacher {
     private String DNI, name, surname, mail, phoneNum;
 
     @Relationship(type = "RECEIVE", direction = Relationship.UNDIRECTED)
-    @JsonProperty("notifications")
+    @JsonProperty
     private Set<Notification> notifications;
 
     public Teacher(){}

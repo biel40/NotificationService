@@ -13,7 +13,7 @@ public class Provider {
     @Id @GeneratedValue private Long id;
     private String name;
 
-    private Provider(){}
+    public Provider(){}
 
     public Long getId() {
         return id;

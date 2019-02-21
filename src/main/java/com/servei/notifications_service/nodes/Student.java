@@ -1,5 +1,6 @@
 package com.servei.notifications_service.nodes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -19,9 +20,10 @@ public class Student {
     private String surname;
 
     @Relationship(type = "HAS", direction = Relationship.UNDIRECTED)
+    @JsonProperty
     private Set<Absence> absences;
 
-    private Student(){}
+    public Student(){}
 
     public Long getId() {
         return id;
