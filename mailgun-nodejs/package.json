@@ -1,0 +1,20 @@
+{
+  "name": "mailgun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mailgun-js": "^0.22.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
+  }
+}
