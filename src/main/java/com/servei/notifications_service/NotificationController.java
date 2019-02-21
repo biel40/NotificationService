@@ -34,10 +34,16 @@ public class NotificationController {
     @Autowired
     public NotificationController(RestTemplate restTemplate,
                                   TeacherRepository teacherRepository,
-                                  NotificationRepository notificationRepository) {
+                                  NotificationRepository notificationRepository,
+                                  StudentRepository studentRepository,
+                                  AbsenceRepository absenceRepository,
+                                  ProviderRepository providerRepository) {
         this.restTemplate = restTemplate;
         this.teacherRepository = teacherRepository;
         this.notificationRepository = notificationRepository;
+        this.absenceRepository = absenceRepository;
+        this.providerRepository = providerRepository;
+        this.studentRepository = studentRepository;
     }
 
     @RequestMapping(value = "/sendmail")
@@ -58,9 +64,12 @@ public class NotificationController {
 
     @RequestMapping("/getTeacher")
     public Teacher getTeacher() {
-
         teacherRepository.deleteAll();
         notificationRepository.deleteAll();
+        studentRepository.deleteAll();
+        providerRepository.deleteAll();
+        notificationRepository.deleteAll();
+        absenceRepository.deleteAll();
 
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
