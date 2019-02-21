@@ -4,8 +4,7 @@ package com.servei.notifications_service;
 import com.servei.notifications_service.models.Constants;
 import com.servei.notifications_service.models.SentMail;
 import com.servei.notifications_service.nodes.*;
-import com.servei.notifications_service.repositories.NotificationRepository;
-import com.servei.notifications_service.repositories.TeacherRepository;
+import com.servei.notifications_service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,9 +27,14 @@ public class NotificationController {
     private RestTemplate restTemplate;
     private TeacherRepository teacherRepository;
     private NotificationRepository notificationRepository;
+    private StudentRepository studentRepository;
+    private ProviderRepository providerRepository;
+    private AbsenceRepository absenceRepository;
 
     @Autowired
-    public NotificationController(RestTemplate restTemplate, TeacherRepository teacherRepository, NotificationRepository notificationRepository) {
+    public NotificationController(RestTemplate restTemplate,
+                                  TeacherRepository teacherRepository,
+                                  NotificationRepository notificationRepository) {
         this.restTemplate = restTemplate;
         this.teacherRepository = teacherRepository;
         this.notificationRepository = notificationRepository;
