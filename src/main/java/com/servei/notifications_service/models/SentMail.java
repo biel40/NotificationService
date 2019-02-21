@@ -7,16 +7,8 @@ public class SentMail {
     private String id;
     private Date date;
     private String provider;
+    private Iterable<Long> idNotifications;
     private boolean sent;
-    private String msg;
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
 
     public Date getDate() {
         return date;
@@ -29,6 +21,7 @@ public class SentMail {
     public String getProvider() {
         return provider;
     }
+
     public boolean isSent(){
         return sent;
     }
@@ -47,5 +40,20 @@ public class SentMail {
 
     public void setSent(boolean sent) {
         this.sent = sent;
+    }
+
+    public Iterable<Long> getIdNotifications() {
+        return idNotifications;
+    }
+
+    @Override
+    public String toString() {
+        return "SentMail{" +
+                "id='" + id + '\'' +
+                ", date=" + date +
+                ", provider='" + provider + '\'' +
+                ", idNotifications=" + idNotifications +
+                ", sent=" + sent +
+                '}';
     }
 }

@@ -6,11 +6,9 @@ import com.servei.notifications_service.models.SentMail;
 import com.servei.notifications_service.nodes.*;
 import com.servei.notifications_service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,15 +40,30 @@ public class NotificationController {
     }
 
     @RequestMapping(value = "/sendmail")
-    public void sendmail() {
+    public synchronized SentMail sendmail() throws NullPointerException{
         Teacher teacher = getTeacher();
-
         SentMail response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
 
+        if (response == null || response.getIdNotifications() == null) {
+            throw new NullPointerException("Error to send notifications");
+        }
+
+        Iterable<Notification> notifies = notificationRepository.findAllById(response.getIdNotifications());
+
+        for (Notification notify : notifies) {
+            Provider provider = new Provider();
+            provider.setName(response.getProvider());
+
+            notify.sendByProvider(provider);
+            notificationRepository.save(notify);
+        }
+
+        return response;
     }
 
     @RequestMapping("/getTeacher")
     public Teacher getTeacher() {
+
         teacherRepository.deleteAll();
         notificationRepository.deleteAll();
         studentRepository.deleteAll();
@@ -80,16 +93,12 @@ public class NotificationController {
 
         student.hasAbsence(absence);
 
-        Provider provider = new Provider();
-        provider.setName("MailGun");
-
         Notification notification2 = new Notification();
         notification2.setDate(date.format(dtfDate));
         notification2.setTime(time.format(dtfTime));
         notification2.setItWasSent(true);
 
         notification2.belongsToStudent(student);
-        notification2.sendByProvider(provider);
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
