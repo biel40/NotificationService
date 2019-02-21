@@ -15,9 +15,6 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class NotificationController {
 
-
-
-
     @RequestMapping(value = "/sendmail")
     public void sendmail(){
         RestTemplate restTemplate = new RestTemplate();
