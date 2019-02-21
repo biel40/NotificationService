@@ -40,7 +40,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<<<<<<< HEAD
         <dependency>
             <groupId>org.mortbay.jetty</groupId>
             <artifactId>jetty-util</artifactId>
@@ -53,8 +52,6 @@
             <scope>compile</scope>
         </dependency>
 
-=======
->>>>>>> 2dea65385853295bfbc5e273bb5667bf56e02d5d
     </dependencies>
 
     <build>
