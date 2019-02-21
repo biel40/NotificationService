@@ -68,7 +68,6 @@ public class NotificationController {
         notificationRepository.deleteAll();
         studentRepository.deleteAll();
         providerRepository.deleteAll();
-        notificationRepository.deleteAll();
         absenceRepository.deleteAll();
 
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("yyyy/MM/dd");
