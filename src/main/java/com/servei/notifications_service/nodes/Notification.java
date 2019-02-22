@@ -15,6 +15,7 @@ public class Notification {
     private String date;
     private String time;
     private boolean itWasSent;
+    private boolean isRead = false;
 
     @Relationship(type = "BELONGS_TO", direction = Relationship.UNDIRECTED)
     @JsonProperty
@@ -66,6 +67,14 @@ public class Notification {
         return providers;
     }
 
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
     public void belongsToStudent(Student student){
         if(this.students == null){
             this.students = new HashSet<>();
@@ -82,11 +91,12 @@ public class Notification {
 
     @Override
     public String toString() {
-        return "Notification{" +
+        return "notification{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", itWasSent=" + itWasSent +
+                ", isRead=" + isRead +
                 ", students=" + students +
                 ", providers=" + providers +
                 '}';

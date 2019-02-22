@@ -5,13 +5,16 @@ import com.servei.notifications_service.models.SentMail;
 import com.servei.notifications_service.nodes.*;
 import com.servei.notifications_service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @RestController
 public class NotificationController {
@@ -38,7 +41,7 @@ public class NotificationController {
         this.studentRepository = studentRepository;
     }
 
-    @RequestMapping(value = "/sendmail")
+    @RequestMapping("/sendmail")
     public synchronized SentMail sendmail() throws NullPointerException{
         Teacher teacher = getTeacher();
         SentMail response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
@@ -60,6 +63,15 @@ public class NotificationController {
         return response;
     }
 
+    @RequestMapping(value = "/setRead", method = RequestMethod.POST)
+    public void setRead(@RequestBody Long id){
+        Optional<Notification> notifications = notificationRepository.findById(id);
+        notifications.ifPresent(notification -> {
+                notification.setRead(true);
+                notificationRepository.save(notification);
+        });
+    }
+
     @RequestMapping("/getTeacher")
     public Teacher getTeacher() {
 
@@ -74,11 +86,6 @@ public class NotificationController {
 
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
-
-        Notification notification1 = new Notification();
-        notification1.setDate(date.format(dtfDate));
-        notification1.setTime(time.format(dtfTime));
-        notification1.setItWasSent(false);
 
         Absence absence = new Absence();
         absence.setDate(date.format(dtfDate));
@@ -106,15 +113,8 @@ public class NotificationController {
         teacher.setSurname("Cabot Dols");
         teacher.setPhoneNum("86598948");
 
-        teacher.receiveNotifications(notification1);
-
-        teacherRepository.save(teacher);
-
-        teacher = teacherRepository.findByName("Joan Guillem");
-
         teacher.receiveNotifications(notification2);
 
-        //The method save() also update nodes and create nodes.
         teacherRepository.save(teacher);
 
         return teacher;
