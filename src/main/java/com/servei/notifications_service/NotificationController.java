@@ -54,8 +54,6 @@ public class NotificationController {
             throw new NullPointerException("Error to send notifications");
         }
 
-        System.out.println(response.toString());
-
         Iterable<Notification> notifies = notificationRepository.findAllById(response.getIdNotifications());
 
         for (Notification notify : notifies) {
