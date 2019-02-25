@@ -82,7 +82,7 @@ public class Notification {
         this.students.add(student);
     }
 
-    public void sendByProvider(Provider provider){
+    public void sentByProvider(Provider provider){
         if(this.providers == null){
             this.providers = new HashSet<>();
         }

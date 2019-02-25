@@ -42,13 +42,19 @@ public class NotificationController {
     }
 
     @RequestMapping("/sendmail")
-    public synchronized SentMail sendmail() throws NullPointerException{
+    public synchronized void sendmail() throws NullPointerException{
         Teacher teacher = getTeacher();
-        SentMail response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
+        SentMail response = null;
+
+        try {
+             response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
+        } catch (Exception ignored){}
 
         if (response == null || response.getIdNotifications() == null) {
             throw new NullPointerException("Error to send notifications");
         }
+
+        System.out.println(response.toString());
 
         Iterable<Notification> notifies = notificationRepository.findAllById(response.getIdNotifications());
 
@@ -56,11 +62,9 @@ public class NotificationController {
             Provider provider = new Provider();
             provider.setName(response.getProvider());
 
-            notify.sendByProvider(provider);
+            notify.sentByProvider(provider);
             notificationRepository.save(notify);
         }
-
-        return response;
     }
 
     @RequestMapping(value = "/setRead", method = RequestMethod.POST)
@@ -87,32 +91,51 @@ public class NotificationController {
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
 
-        Absence absence = new Absence();
-        absence.setDate(date.format(dtfDate));
-        absence.setTime(time.format(dtfTime));
-        absence.setSubject("Desplegamanet");
+        Absence absence1 = new Absence();
+        absence1.setDate(date.format(dtfDate));
+        absence1.setTime(time.format(dtfTime));
+        absence1.setSubject("Desplegament");
 
-        Student student = new Student();
-        student.setDNI("4845848468S");
-        student.setName("Berjamin");
-        student.setSurname("Cardona");
+        Absence absence2 = new Absence();
+        absence2.setDate(date.format(dtfDate));
+        absence2.setTime(time.format(dtfTime));
+        absence2.setSubject("DIW");
 
-        student.hasAbsence(absence);
+        Student student1 = new Student();
+        student1.setDNI("4845848468S");
+        student1.setName("Berjamin");
+        student1.setSurname("Cardona");
+
+        Student student2 = new Student();
+        student2.setDNI("4564678468S");
+        student2.setName("Joan Guillem");
+        student2.setSurname("Cabot");
+
+        student1.hasAbsence(absence1);
+        student2.hasAbsence(absence2);
+
+        Notification notification1 = new Notification();
+        notification1.setDate(date.format(dtfDate));
+        notification1.setTime(time.format(dtfTime));
+        notification1.setItWasSent(true);
+
+        notification1.belongsToStudent(student1);
 
         Notification notification2 = new Notification();
         notification2.setDate(date.format(dtfDate));
         notification2.setTime(time.format(dtfTime));
-        notification2.setItWasSent(true);
+        notification2.setItWasSent(false);
 
-        notification2.belongsToStudent(student);
+        notification2.belongsToStudent(student2);
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
         teacher.setMail("jgcabotd@gmail.com");
-        teacher.setName("Joan Guillem");
-        teacher.setSurname("Cabot Dols");
-        teacher.setPhoneNum("86598948");
+        teacher.setName("Joan");
+        teacher.setSurname("Galmes");
+        teacher.setPhoneNum("654887548");
 
+        teacher.receiveNotifications(notification1);
         teacher.receiveNotifications(notification2);
 
         teacherRepository.save(teacher);

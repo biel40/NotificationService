@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class SentMail {
 
-    private String id;
     private Date date;
     private String provider;
     private Iterable<Long> idNotifications;
@@ -14,20 +13,12 @@ public class SentMail {
         return date;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getProvider() {
         return provider;
     }
 
     public boolean isSent(){
         return sent;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setDate(Date date) {
@@ -48,8 +39,7 @@ public class SentMail {
 
     @Override
     public String toString() {
-        return "SentMail{" +
-                "id='" + id + '\'' +
+        return "sentMail{" +
                 ", date=" + date +
                 ", provider='" + provider + '\'' +
                 ", idNotifications=" + idNotifications +
