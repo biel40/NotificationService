@@ -7,24 +7,30 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.servei.notifications_service.models.Constants;
 import com.servei.notifications_service.nodes.Teacher;
 
-public class Mailgun implements Notificator {
+public class Mailgun extends Provider {
 
-    private final String sender = "Weekly Notifications <weeklynotifications@gmail.com>";
-    private final String subject = "Weekly notifications for: ";
-    private final Formatter formatter = new Formatter();
+    public Mailgun(String sender, String subject, String provider) {
+        super(sender, subject, provider);
+    }
 
     @Override
     public void sendNotification(Teacher teacher) throws UnirestException {
-        formatter.setTeacher(teacher);
-        System.out.println(sender + " " + teacher.getMail() + " " + subject);
+        getFormatter().setTeacher(teacher);
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + Constants.MAILGUN_DOMAIN + "/messages")
                 .basicAuth("api", Constants.API_MAILGUN)
-                .field("from", sender)
+                .field("from", getSender())
                 .field("to", teacher.getMail())
-                .field("subject", subject + teacher.getName() + " " + teacher.getSurname())
-                .field("html", formatter.toHtml())
+                .field("subject", getSubject() + teacher.getName() + " " + teacher.getSurname())
+                .field("html", getFormatter().toHtml())
                 .asJson();
-        System.out.println("Email sent " + request.getBody());
+        if (request.getStatusText().equals("OK")) {
+            this.updateNotifications(teacher);
+        }
+    }
+
+    @Override
+    public void updateNotifications(Teacher teacher) {
+        teacher.getNotifications().forEach(notification -> notification.setItWasSent(true));
     }
 
 

@@ -5,4 +5,5 @@ import com.servei.notifications_service.nodes.Teacher;
 
 public interface Notificator {
     void sendNotification(Teacher teacher) throws UnirestException;
+    void updateNotifications(Teacher teacher);
 }

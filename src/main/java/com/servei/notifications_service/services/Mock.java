@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Mock {
     public static void main(String[] args) {
-        Mailgun mg = new Mailgun();
+        Mailgun mg = new Mailgun("Weekly Notifications <weeklynotifications@gmail.com>", "Weekly notifications for: ", "Mailgun");
         DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -58,7 +58,7 @@ public class Mock {
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
-        teacher.setMail("alexis.platino@gmail.com");
+        teacher.setMail("alexis.platinoa@gmail.com");
         teacher.setName("Joan");
         teacher.setSurname("Galmes");
         teacher.setPhoneNum("654887548");
@@ -68,7 +68,7 @@ public class Mock {
         try {
             mg.sendNotification(teacher);
         } catch (UnirestException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

@@ -18,7 +18,6 @@ public class HTMLParser {
 
     public String getHtml() {
         for (Notification notification : teacher.getNotifications()) {
-
             this.html += "<div style=\"padding-bottom: 15px;\" class=\"Message Message--red\">\n" +
                     "<img src=\"http://172.16.7.228:3000/"+notification.getId()+"/empty.png\" alt=\"\">\n" +
                     "\n" +
@@ -33,23 +32,31 @@ public class HTMLParser {
     }
 
     private String getStudents(Notification notification) {
-        String html = "";
+        StringBuilder html = new StringBuilder();
         for (Student student : notification.getStudents()) {
-            html += "<h4 style=\"color: white; font-size: 14pt !important; margin: 0px; padding: 10px 10px 5px 10px;\">Faltes d'en "
-                    +student.getName() + " " +student.getSurname() + "</h4>\n" +
-                    "            <ul style=\"margin: 0px; padding: 5px 10px 10px 10px;\">\n" +
-                    this.getAbsences(student) +
-                    "            </ul>";
+            html.append("<h4 style=\"color: white; font-size: 14pt !important; margin: 0px; padding: 10px 10px 5px 10px;\">Faltes d'en ")
+                    .append(student.getName())
+                    .append(" ")
+                    .append(student.getSurname())
+                    .append("</h4>\n")
+                    .append("<ul style=\"margin: 0px; padding: 5px 10px 10px 10px;\">\n")
+                    .append(this.getAbsences(student))
+                    .append("</ul>");
         }
-        return html;
+        return html.toString();
     }
 
     private String getAbsences(Student student) {
-        String html = "";
+        StringBuilder html = new StringBuilder();
         for (Absence absence : student.getAbsences()) {
-            html += "<li style=\"font-size: 12pt;\">"+absence.getSubject() +" - "+
-                    absence.getDate() + "-"+absence.getTime()+"</li>";
+            html.append("<li style=\"font-size: 12pt;\">")
+                    .append(absence.getSubject())
+                    .append(" - ")
+                    .append(absence.getDate())
+                    .append("-")
+                    .append(absence.getTime())
+                    .append("</li>");
         }
-        return html;
+        return html.toString();
     }
 }
