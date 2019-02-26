@@ -1,25 +1,20 @@
 package com.servei.notifications_service;
 
-import com.servei.notifications_service.models.Constants;
-import com.servei.notifications_service.models.SentMail;
+import com.servei.notifications_service.MailProvider.MailGun;
+import com.servei.notifications_service.MailProvider.MailProvider;
 import com.servei.notifications_service.nodes.*;
 import com.servei.notifications_service.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 @RestController
 public class NotificationController {
 
-    private RestTemplate restTemplate;
+
     private TeacherRepository teacherRepository;
     private NotificationRepository notificationRepository;
     private StudentRepository studentRepository;
@@ -27,13 +22,11 @@ public class NotificationController {
     private AbsenceRepository absenceRepository;
 
     @Autowired
-    public NotificationController(RestTemplate restTemplate,
-                                  TeacherRepository teacherRepository,
+    public NotificationController(TeacherRepository teacherRepository,
                                   NotificationRepository notificationRepository,
                                   StudentRepository studentRepository,
                                   AbsenceRepository absenceRepository,
                                   ProviderRepository providerRepository) {
-        this.restTemplate = restTemplate;
         this.teacherRepository = teacherRepository;
         this.notificationRepository = notificationRepository;
         this.absenceRepository = absenceRepository;
@@ -41,37 +34,20 @@ public class NotificationController {
         this.studentRepository = studentRepository;
     }
 
+    private MailProvider mailProvider = new MailGun();
+
     @RequestMapping("/sendmail")
-    public synchronized void sendmail() throws NullPointerException{
+    public void sendmail() {
+
         Teacher teacher = getTeacher();
-        SentMail response = null;
 
-        try {
-             //response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
-        } catch (Exception ignored){}
+        mailProvider.configure();
 
-        if (response == null || response.getIdNotifications() == null) {
-            throw new NullPointerException("Error to send notifications");
+        boolean sent = mailProvider.sendMail(teacher);
+        if (sent){
+            mailProvider.updateNotifications(teacher);
+            teacherRepository.save(teacher);
         }
-
-        Iterable<Notification> notifies = notificationRepository.findAllById(response.getIdNotifications());
-
-        for (Notification notify : notifies) {
-            Provider provider = new Provider();
-            provider.setName(response.getProvider());
-
-            notify.sentByProvider(provider);
-            notificationRepository.save(notify);
-        }
-    }
-
-    @RequestMapping(value = "/setRead", method = RequestMethod.POST)
-    public void setRead(@RequestBody Long id){
-        Optional<Notification> notifications = notificationRepository.findById(id);
-        notifications.ifPresent(notification -> {
-                notification.setRead(true);
-                notificationRepository.save(notification);
-        });
     }
 
     @RequestMapping("/getTeacher")
@@ -128,7 +104,7 @@ public class NotificationController {
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
-        teacher.setMail("jgcabotd@gmail.com");
+        teacher.setMail("ivancaballero9717@gmail.com");
         teacher.setName("Joan");
         teacher.setSurname("Galmes");
         teacher.setPhoneNum("654887548");

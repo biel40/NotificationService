@@ -4,8 +4,6 @@ import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
 
-import java.util.Objects;
-
 /**
  * Created by tanin on 20/02/2019.
  */
@@ -31,14 +29,6 @@ public class Provider {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Provider provider = (Provider) o;
-        return Objects.equals(name, provider.name);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class Mock {
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
-        teacher.setMail("alexis.platinoa@gmail.com");
+        teacher.setMail("ivancaballero9717@gmail.com");
         teacher.setName("Joan");
         teacher.setSurname("Galmes");
         teacher.setPhoneNum("654887548");

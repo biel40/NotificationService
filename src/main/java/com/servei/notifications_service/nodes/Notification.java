@@ -83,14 +83,9 @@ public class Notification {
     }
 
     public void sentByProvider(Provider provider){
-        if (this.providers == null){
+        if(this.providers == null){
             this.providers = new HashSet<>();
         }
-
-        if (this.providers.contains(provider)){
-            return;
-        }
-
         this.providers.add(provider);
     }
 

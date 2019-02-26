@@ -1,5 +1,7 @@
 package com.servei.notifications_service.modules;
 
+import com.servei.notifications_service.MailProvider.MailGun;
+import com.servei.notifications_service.MailProvider.MailProvider;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

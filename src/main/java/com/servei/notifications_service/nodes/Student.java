@@ -57,15 +57,15 @@ public class Student {
         this.surname = surname;
     }
 
+    public Set<Absence> getAbsences() {
+        return absences;
+    }
+
     public void hasAbsence(Absence absence){
         if(this.absences == null){
             this.absences = new HashSet<>();
         }
         this.absences.add(absence);
-    }
-
-    public Set<Absence> getAbsences() {
-        return absences;
     }
 
     @Override

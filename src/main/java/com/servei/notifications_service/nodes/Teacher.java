@@ -79,8 +79,11 @@ public class Teacher {
     }
 
     public Set<Notification> getNotifications() {
-        return this.notifications;
+        return notifications;
     }
+
+
+
     @Override
     public String toString() {
         return "teacher{" +
