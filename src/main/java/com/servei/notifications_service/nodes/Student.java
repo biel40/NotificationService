@@ -64,6 +64,10 @@ public class Student {
         this.absences.add(absence);
     }
 
+    public Set<Absence> getAbsences() {
+        return absences;
+    }
+
     @Override
     public String toString() {
         return "student{" +

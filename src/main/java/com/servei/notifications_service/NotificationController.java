@@ -47,7 +47,7 @@ public class NotificationController {
         SentMail response = null;
 
         try {
-             response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
+             //response = restTemplate.postForObject(Constants.URL_MAILGUN, teacher, SentMail.class);
         } catch (Exception ignored){}
 
         if (response == null || response.getIdNotifications() == null) {

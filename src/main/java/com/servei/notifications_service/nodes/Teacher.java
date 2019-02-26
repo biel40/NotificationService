@@ -78,6 +78,9 @@ public class Teacher {
         this.phoneNum = phoneNum;
     }
 
+    public Set<Notification> getNotifications() {
+        return this.notifications;
+    }
     @Override
     public String toString() {
         return "teacher{" +
