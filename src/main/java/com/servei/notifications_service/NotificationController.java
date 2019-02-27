@@ -48,7 +48,7 @@ public class NotificationController {
         List<NotificationError> sent = mailProvider.sendNotifications(teacher);
 
         if (!sent.isEmpty()){
-            //Aquí controlar errores en caso de que la lista no este vacia.
+            // Aquí controlar errores en caso de que la lista no este vacia.
         }
     }
 

@@ -8,4 +8,5 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 @EnableNeo4jRepositories("com.servei.notifications_service.repositories")
 @EntityScan(basePackages = "com.servei.notifications_service.nodes")
 public class SpringConfiguration {
+
 }
