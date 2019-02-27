@@ -1,9 +1,11 @@
-package com.servei.notifications_service.services;
+package com.servei.notifications_service.services.formaters;
 
 import com.servei.notifications_service.nodes.Absence;
 import com.servei.notifications_service.nodes.Notification;
 import com.servei.notifications_service.nodes.Student;
 import com.servei.notifications_service.nodes.Teacher;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 public class HTMLFormat implements Formatter {
 

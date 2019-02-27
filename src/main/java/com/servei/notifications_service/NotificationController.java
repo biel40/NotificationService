@@ -1,19 +1,23 @@
 package com.servei.notifications_service;
 
-import com.servei.notifications_service.MailProvider.MailGun;
-import com.servei.notifications_service.MailProvider.MailProvider;
-import com.servei.notifications_service.nodes.*;
+import com.servei.notifications_service.nodes.Absence;
+import com.servei.notifications_service.nodes.Notification;
+import com.servei.notifications_service.nodes.Student;
+import com.servei.notifications_service.nodes.Teacher;
 import com.servei.notifications_service.repositories.*;
+import com.servei.notifications_service.services.NotificationError;
+import com.servei.notifications_service.services.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 public class NotificationController {
-
 
     private TeacherRepository teacherRepository;
     private NotificationRepository notificationRepository;
@@ -26,23 +30,25 @@ public class NotificationController {
                                   NotificationRepository notificationRepository,
                                   StudentRepository studentRepository,
                                   AbsenceRepository absenceRepository,
-                                  ProviderRepository providerRepository) {
+                                  ProviderRepository providerRepository,
+                                  NotificationProvider mailProvider) {
         this.teacherRepository = teacherRepository;
         this.notificationRepository = notificationRepository;
         this.absenceRepository = absenceRepository;
         this.providerRepository = providerRepository;
         this.studentRepository = studentRepository;
+        this.mailProvider = mailProvider;
     }
 
-    private MailProvider mailProvider = new MailGun();
+    private final NotificationProvider mailProvider;
 
     @RequestMapping("/sendmail")
     public void sendmail() {
         Teacher teacher = getTeacher();
-        boolean sent = mailProvider.sendMail(teacher);
+        List<NotificationError> sent = mailProvider.sendNotifications(teacher);
 
-        if (sent){
-            teacherRepository.save(teacher);
+        if (!sent.isEmpty()){
+            //Aquí controlar errores en caso de que la lista no este vacia.
         }
     }
 
@@ -100,7 +106,7 @@ public class NotificationController {
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
-        teacher.setMail("ivancaballero9717@gmail.com");
+        teacher.setMail("jgcabotd@gmail.com");
         teacher.setName("Joan");
         teacher.setSurname("Galmes");
         teacher.setPhoneNum("654887548");
@@ -112,6 +118,5 @@ public class NotificationController {
 
         return teacher;
     }
-
 
 }
