@@ -106,9 +106,9 @@ public class NotificationController {
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
-        teacher.setMail("jgcabotd@gmail.com");
-        teacher.setName("Joan");
-        teacher.setSurname("Galmes");
+        teacher.setMail("javiervinasgarcia@gmail.com");
+        teacher.setName("Javi");
+        teacher.setSurname("Viñas");
         teacher.setPhoneNum("654887548");
 
         teacher.receiveNotifications(notification1);

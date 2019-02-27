@@ -102,6 +102,18 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.3.0</version>
         </dependency>
+        <!--Dependencies socketio-->
+        <dependency>
+            <groupId>com.corundumstudio.socketio</groupId>
+            <artifactId>netty-socketio</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+
+        <!-- thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
