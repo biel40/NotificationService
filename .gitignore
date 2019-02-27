@@ -34,6 +34,6 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 .idea
-src/main/resources/application.properties
+\src\main\resources\application.properties
 
-notifications_service.iml
+./notifications_service.iml
