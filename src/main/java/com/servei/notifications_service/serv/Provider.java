@@ -1,4 +1,4 @@
-package com.servei.notifications_service.services;
+package com.servei.notifications_service.serv;
 
 public abstract class Provider implements Notificator {
     private final String sender;// = "Weekly Notifications <weeklynotifications@gmail.com>";
@@ -6,7 +6,7 @@ public abstract class Provider implements Notificator {
     private final String provider;
     private final Formatter formatter = new Formatter();
 
-    public Provider(String sender, String subject, String provider) {
+    public Provider(String sender, String subject, String provider){
         this.sender = sender;
         this.subject = subject;
         this.provider = provider;

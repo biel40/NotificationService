@@ -4,16 +4,17 @@ import com.servei.notifications_service.nodes.Teacher;
 import net.sargue.mailgun.Configuration;
 import net.sargue.mailgun.Mail;
 import net.sargue.mailgun.content.Body;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MailGun implements MailProvider {
 
     private Configuration configuration;
 
+    @Autowired
     public MailGun(){
 
     }
 
-    @Override
     public void configure() {
         configuration = new Configuration()
                 .domain("")
@@ -27,7 +28,6 @@ public class MailGun implements MailProvider {
         Formatter formatter = new Formatter();
         formatter.setTeacher(teacher);
 
-
         return Mail.using(configuration)
                 .to(teacher.getMail())
                 .subject("This message has an text attachment")
@@ -37,11 +37,6 @@ public class MailGun implements MailProvider {
                 .isOk();
     }
 
-    @Override
-    public void updateNotifications(Teacher teacher) {
-        teacher.getNotifications().forEach(notification -> notification.setItWasSent(true));
-    }
-
     public Configuration getConfiguration() {
         return configuration;
     }
@@ -49,6 +44,4 @@ public class MailGun implements MailProvider {
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
     }
-
-
 }

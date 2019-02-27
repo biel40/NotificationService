@@ -1,7 +1,7 @@
 package com.servei.notifications_service.modules;
 
-import com.servei.notifications_service.MailProvider.MailGun;
-import com.servei.notifications_service.MailProvider.MailProvider;
+import com.servei.notifications_service.services.Formatter;
+import com.servei.notifications_service.services.HTMLFormat;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,4 +18,8 @@ public class SpringConfiguration {
         return new RestTemplate();
     }
 
+    @Bean
+    public Formatter formatter(){
+        return new HTMLFormat();
+    }
 }

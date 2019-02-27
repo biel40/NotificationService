@@ -1,4 +1,4 @@
-package com.servei.notifications_service.services.parsers;
+package com.servei.notifications_service.serv.parsers;
 
 import com.servei.notifications_service.nodes.Absence;
 import com.servei.notifications_service.nodes.Notification;

@@ -38,14 +38,10 @@ public class NotificationController {
 
     @RequestMapping("/sendmail")
     public void sendmail() {
-
         Teacher teacher = getTeacher();
-
-        mailProvider.configure();
-
         boolean sent = mailProvider.sendMail(teacher);
+
         if (sent){
-            mailProvider.updateNotifications(teacher);
             teacherRepository.save(teacher);
         }
     }
