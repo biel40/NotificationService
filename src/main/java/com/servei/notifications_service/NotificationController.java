@@ -79,7 +79,7 @@ public class NotificationController {
 
         Student student1 = new Student();
         student1.setDNI("4845848468S");
-        student1.setName("Berjamin");
+        student1.setName("Benjamin");
         student1.setSurname("Cardona");
 
         Student student2 = new Student();
