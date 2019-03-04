@@ -5,7 +5,7 @@ public class ResponseVerificationToken {
     private boolean success;
     private String message;
 
-    public ResponseVerificationToken(boolean success, String message) {
+    public ResponseVerificationToken (boolean success, String message) {
         this.success = success;
         this.message = message;
     }
