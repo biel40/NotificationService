@@ -3,6 +3,7 @@ package com.servei.notifications_service;
 import com.servei.notifications_service.mocks.ResponseVerificationToken;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
@@ -28,9 +29,10 @@ public class ProtectedResourceController {
         String token = restTemplate.getForObject(googleTokenUrl, String.class);
 
         //TODO: Falta mirar las Headers del Token? Además de mirar si me hace bien la deserialización del JSON.
+        // TODO: Peta aquí!
         ResponseVerificationToken responseVerificationToken = restTemplate.postForObject(verifyTokenUrl, token, ResponseVerificationToken.class);
 
-        if (responseVerificationToken.isSuccess()) {
+        if (responseVerificationToken.isSuccess() ) {
 
             File xml = new File("./src/main/resources/exportacioDadesCentre.xml");
             response.addHeader("Content-disposition", "attachment;filename=exportacioDadesCentre.xml");
@@ -60,11 +62,13 @@ public class ProtectedResourceController {
     }
 
     @Autowired
+    @Qualifier("getTokenProviderUrl")
     public void setGoogleTokenUrl(String googleTokenUrl) {
         this.googleTokenUrl = googleTokenUrl;
     }
 
     @Autowired
+    @Qualifier("verifyTokenUrl")
     public void setVerifyTokenUrl(String verifyTokenUrl) {
         this.verifyTokenUrl = verifyTokenUrl;
     }

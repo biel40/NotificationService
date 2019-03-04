@@ -1,5 +1,6 @@
 package com.servei.notifications_service.TokenProvider;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -16,12 +17,14 @@ public class TokenProvider {
     String tokenVerificationUrl;
 
     @Bean
+    @Qualifier("getTokenProviderUrl")
     public String getTokenProviderUrl() {
         return this.tokenProviderUrl;
     }
 
     @Bean
-    public String getTokenVerificatorUrl() {
+    @Qualifier("verifyTokenUrl")
+    public String getTokenVerificationUrl() {
         return this.tokenVerificationUrl;
     }
 
