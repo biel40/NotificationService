@@ -56,7 +56,7 @@ public class NotificationController {
         List<NotificationError> sent = mailgunNotificator.sendNotifications(teacher);
 
         if (!sent.isEmpty()){
-            //Aquí controlar errores en caso de que la lista no este vacia.
+            // Aquí controlar errores en caso de que la lista no este vacia.
         }
     }
 
@@ -97,7 +97,7 @@ public class NotificationController {
 
         Student student1 = new Student();
         student1.setDNI("4845848468S");
-        student1.setName("Berjamin");
+        student1.setName("Benjamin");
         student1.setSurname("Cardona");
 
         Student student2 = new Student();
@@ -124,9 +124,9 @@ public class NotificationController {
 
         Teacher teacher = new Teacher();
         teacher.setDNI("45646969P");
-        teacher.setMail("jgcabotd@gmail.com");
-        teacher.setName("Joan");
-        teacher.setSurname("Galmes");
+        teacher.setMail("javiervinasgarcia@gmail.com");
+        teacher.setName("Javi");
+        teacher.setSurname("Viñas");
         teacher.setPhoneNum("654887548");
 
         teacher.receiveNotifications(notification1);
