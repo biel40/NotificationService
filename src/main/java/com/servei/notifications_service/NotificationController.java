@@ -7,8 +7,12 @@ import com.servei.notifications_service.nodes.Teacher;
 import com.servei.notifications_service.repositories.*;
 import com.servei.notifications_service.services.NotificationError;
 import com.servei.notifications_service.services.NotificationProvider;
+import com.servei.notifications_service.services.socket_notificator.SocketNotificator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -30,26 +34,38 @@ public class NotificationController {
                                   NotificationRepository notificationRepository,
                                   StudentRepository studentRepository,
                                   AbsenceRepository absenceRepository,
-                                  ProviderRepository providerRepository,
-                                  NotificationProvider mailProvider) {
+                                  ProviderRepository providerRepository) {
         this.teacherRepository = teacherRepository;
         this.notificationRepository = notificationRepository;
         this.absenceRepository = absenceRepository;
         this.providerRepository = providerRepository;
         this.studentRepository = studentRepository;
-        this.mailProvider = mailProvider;
     }
 
-    private final NotificationProvider mailProvider;
+
+    @Autowired
+    NotificationProvider mailgunNotificator;
+
+    @Autowired
+    NotificationProvider socketNotificator;
+
 
     @RequestMapping("/sendmail")
     public void sendmail() {
         Teacher teacher = getTeacher();
-        List<NotificationError> sent = mailProvider.sendNotifications(teacher);
+        List<NotificationError> sent = mailgunNotificator.sendNotifications(teacher);
 
         if (!sent.isEmpty()){
             //Aquí controlar errores en caso de que la lista no este vacia.
         }
+    }
+
+    @RequestMapping("/sendSocket")
+    public void sendSocket() {
+        System.out.println("antes de getteacher");
+        Teacher teacher = getTeacher();
+
+        socketNotificator.sendNotifications(teacher);
     }
 
     @RequestMapping("/getTeacher")
@@ -66,6 +82,8 @@ public class NotificationController {
 
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
+
+        System.out.println("formatos de fecha");
 
         Absence absence1 = new Absence();
         absence1.setDate(date.format(dtfDate));
