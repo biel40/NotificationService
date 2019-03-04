@@ -1,11 +1,12 @@
 package com.servei.notifications_service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.servei.notifications_service.mocks.ResponseVerificationToken;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -47,8 +48,10 @@ public class ProtectedResourceController {
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, headers);
 
-        // TODO: Peta aquí. Hace falta cambiar el tipo de objeto a Deserializar.
-        ResponseVerificationToken responseVerificationToken = restTemplate.postForObject(tokenVerificationUrl, httpEntity, ResponseVerificationToken.class);
+        // We use the GSON library to deserialize the JSON we obtain from the Verifier.
+        Gson gson = new GsonBuilder().create();
+        String json = restTemplate.postForObject(tokenVerificationUrl, httpEntity, String.class);
+        ResponseVerificationToken responseVerificationToken = gson.fromJson(json, ResponseVerificationToken.class);
 
         if (responseVerificationToken.isSuccess() ) {
 
