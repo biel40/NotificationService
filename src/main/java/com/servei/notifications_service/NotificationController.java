@@ -62,7 +62,6 @@ public class NotificationController {
 
     @RequestMapping("/sendSocket")
     public void sendSocket() {
-        System.out.println("antes de getteacher");
         Teacher teacher = getTeacher();
 
         socketNotificator.sendNotifications(teacher);
@@ -82,9 +81,7 @@ public class NotificationController {
 
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
-
-        System.out.println("formatos de fecha");
-
+        
         Absence absence1 = new Absence();
         absence1.setDate(date.format(dtfDate));
         absence1.setTime(time.format(dtfTime));
