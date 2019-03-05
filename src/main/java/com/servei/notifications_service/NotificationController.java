@@ -9,11 +9,13 @@ import com.servei.notifications_service.services.NotificationError;
 import com.servei.notifications_service.services.NotificationProvider;
 import com.servei.notifications_service.services.socket_notificator.SocketNotificator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,6 +31,8 @@ public class NotificationController {
     private ProviderRepository providerRepository;
     private AbsenceRepository absenceRepository;
 
+    @Autowired
+    RestTemplate restTemplate;
     @Autowired
     public NotificationController(TeacherRepository teacherRepository,
                                   NotificationRepository notificationRepository,
@@ -133,5 +137,26 @@ public class NotificationController {
 
         return teacher;
     }
+
+    @Value("${mail.domain}")
+    private String mailDomain;
+    @Value("${database.privide.url}")
+    private String databaseUrl;
+
+    @RequestMapping("/getMockTeacher")
+    public void getMockTeacher() {
+
+        Teacher[] teachers = restTemplate.getForObject(databaseUrl,Teacher[].class);
+
+
+        // Se podria hacer con un forEach si se quiere
+        for (int i = 0; i<teachers.length; i++){
+            teachers[i].setMail(teachers[i].getName().toLowerCase()+teachers[i].getSurname().toLowerCase()+mailDomain);
+            System.out.println(teachers[i]);
+            teacherRepository.save(teachers[i]);
+        }
+
+    }
+
 
 }
