@@ -115,7 +115,7 @@
             <version>1.7.12</version>
         </dependency>
 
-        <!-- Google GSON  -->
+        <!-- Google GSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

@@ -33,7 +33,7 @@ public class ProtectedResourceController {
     }
 
     @RequestMapping("/getProtectedResource")
-    public void getProtectedResource(HttpServletRequest request, HttpServletResponse response,
+    public void getProtectedResource(HttpServletResponse response,
                                      @RequestHeader("Authorization") String token) throws IOException {
 
         RestTemplate restTemplate = new RestTemplate();

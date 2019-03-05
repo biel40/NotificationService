@@ -7,12 +7,8 @@ import com.servei.notifications_service.nodes.Teacher;
 import com.servei.notifications_service.repositories.*;
 import com.servei.notifications_service.services.NotificationError;
 import com.servei.notifications_service.services.NotificationProvider;
-import com.servei.notifications_service.services.socket_notificator.SocketNotificator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
