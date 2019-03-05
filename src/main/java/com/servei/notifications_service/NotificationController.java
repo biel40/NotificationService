@@ -8,8 +8,10 @@ import com.servei.notifications_service.repositories.*;
 import com.servei.notifications_service.services.NotificationError;
 import com.servei.notifications_service.services.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,6 +27,14 @@ public class NotificationController {
     private ProviderRepository providerRepository;
     private AbsenceRepository absenceRepository;
 
+    @Value("${mail.domain}")
+    private String mailDomain;
+
+    @Value("${database.privide.url}")
+    private String databaseUrl;
+
+    @Autowired
+    RestTemplate restTemplate;
     @Autowired
     public NotificationController(TeacherRepository teacherRepository,
                                   NotificationRepository notificationRepository,
@@ -129,5 +139,19 @@ public class NotificationController {
 
         return teacher;
     }
+
+    @RequestMapping("/getMockTeacher")
+    public void getMockTeacher() {
+
+        Teacher[] teachers = restTemplate.getForObject(databaseUrl,Teacher[].class);
+
+        for (int i = 0; i < teachers.length; i++){
+            teachers[i].setMail(teachers[i].getName().toLowerCase()+teachers[i].getSurname().toLowerCase()+mailDomain);
+            System.out.println(teachers[i]);
+            teacherRepository.save(teachers[i]);
+        }
+
+    }
+
 
 }

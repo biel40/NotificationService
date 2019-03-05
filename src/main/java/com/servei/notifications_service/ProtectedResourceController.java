@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.servei.notifications_service.mocks.ResponseVerificationToken;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,8 @@ public class ProtectedResourceController {
 
     @Value("${token.verificator.url}")
     String tokenVerificationUrl;
-
+    @Autowired
+    private RestTemplate restTemplate;
     public ProtectedResourceController() {
 
     }
@@ -35,8 +37,6 @@ public class ProtectedResourceController {
     @RequestMapping("/getProtectedResource")
     public void getProtectedResource(HttpServletResponse response,
                                      @RequestHeader("Authorization") String token) throws IOException {
-
-        RestTemplate restTemplate = new RestTemplate();
 
         System.out.println(token);
 
