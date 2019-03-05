@@ -32,8 +32,7 @@
 
     /*]]>*/
     $(function () {
-        var socket = io('http://192.168.1.13:9080');
-
+        var socket = io('http://127.0.0.1:9080');
         socket.emit('register',{email: name});
 
 
@@ -42,17 +41,17 @@
         //     $('#m').val('');
         //     return false;
         // });
+
         socket.on('notification', function(notification){
             console.log(notification);
         });
-
-
 
         socket.on('register', function(msg){
             $('#messages').append($('<li>').text(msg.userName + ':' + msg.message));
             window.scrollTo(0, document.body.scrollHeight);
         });
     });
+
 </script>
 
 </body>

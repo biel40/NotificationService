@@ -28,6 +28,7 @@ public class ProtectedResourceController {
 
     @Value("${token.verificator.url}")
     String tokenVerificationUrl;
+
     @Autowired
     private RestTemplate restTemplate;
     public ProtectedResourceController() {

@@ -8,7 +8,9 @@ import com.servei.notifications_service.services.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class SocketNotificator implements NotificationProvider {
@@ -16,16 +18,22 @@ public class SocketNotificator implements NotificationProvider {
     @Autowired
     Registers registers;
 
-    @Override
+
     public List<NotificationError> sendNotifications(Teacher teacher) {
+
+        System.out.println(teacher);
+        System.out.println(teacher.getNotifications().toString());
 
         SocketIOClient teacherSocket = registers.getTeacherRegisters().get(teacher.getMail());
 
-        for(Notification notification : teacher.getNotifications()){
+        Set<Notification> notificationSet = teacher.getNotifications();
+
+        for(Notification notification : notificationSet){
+            //TODO: Null pointer Exception.
             teacherSocket.sendEvent("notification", notification);
+            System.out.println("Evento mandado correctamente.");
         }
 
-
-        return null;
+        return new LinkedList<>();
     }
 }

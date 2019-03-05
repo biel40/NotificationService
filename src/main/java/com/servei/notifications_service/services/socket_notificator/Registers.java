@@ -1,7 +1,6 @@
 package com.servei.notifications_service.services.socket_notificator;
 
 import com.corundumstudio.socketio.SocketIOClient;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

@@ -30,11 +30,12 @@ public class NotificationController {
     @Value("${mail.domain}")
     private String mailDomain;
 
-    @Value("${database.privide.url}")
+    @Value("${database.provide.url}")
     private String databaseUrl;
 
     @Autowired
     RestTemplate restTemplate;
+
     @Autowired
     public NotificationController(TeacherRepository teacherRepository,
                                   NotificationRepository notificationRepository,
@@ -55,7 +56,6 @@ public class NotificationController {
     @Autowired
     NotificationProvider socketNotificator;
 
-
     @RequestMapping("/sendmail")
     public void sendmail() {
         Teacher teacher = getTeacher();
@@ -70,7 +70,7 @@ public class NotificationController {
     public void sendSocket() {
         Teacher teacher = getTeacher();
 
-        socketNotificator.sendNotifications(teacher);
+        List<NotificationError> sent = socketNotificator.sendNotifications(teacher);
     }
 
     @RequestMapping("/getTeacher")
@@ -132,6 +132,7 @@ public class NotificationController {
         teacher.setSurname("Viñas");
         teacher.setPhoneNum("654887548");
 
+
         teacher.receiveNotifications(notification1);
         teacher.receiveNotifications(notification2);
 
@@ -143,10 +144,11 @@ public class NotificationController {
     @RequestMapping("/getMockTeacher")
     public void getMockTeacher() {
 
-        Teacher[] teachers = restTemplate.getForObject(databaseUrl,Teacher[].class);
+        Teacher[] teachers = restTemplate.getForObject(databaseUrl, Teacher[].class);
 
         for (int i = 0; i < teachers.length; i++){
-            teachers[i].setMail(teachers[i].getName().toLowerCase()+teachers[i].getSurname().toLowerCase()+mailDomain);
+            teachers[i].setMail(teachers[i].getName().toLowerCase() + teachers[i].getSurname().toLowerCase() + mailDomain);
+
             System.out.println(teachers[i]);
             teacherRepository.save(teachers[i]);
         }
