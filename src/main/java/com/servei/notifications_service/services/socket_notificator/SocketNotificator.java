@@ -25,7 +25,6 @@ public class SocketNotificator implements NotificationProvider {
         System.out.println(teacher.getNotifications().toString());
 
         SocketIOClient teacherSocket = registers.getTeacherRegisters().get(teacher.getMail());
-
         Set<Notification> notificationSet = teacher.getNotifications();
 
         for(Notification notification : notificationSet){

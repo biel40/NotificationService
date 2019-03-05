@@ -69,7 +69,6 @@ public class NotificationController {
     @RequestMapping("/sendSocket")
     public void sendSocket() {
         Teacher teacher = getTeacher();
-
         List<NotificationError> sent = socketNotificator.sendNotifications(teacher);
     }
 

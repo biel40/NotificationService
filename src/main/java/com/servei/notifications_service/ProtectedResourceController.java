@@ -16,15 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Controller
 public class ProtectedResourceController {
-
-    @Value("${token.provider.url}")
-    String tokenProviderUrl;
 
     @Value("${token.verificator.url}")
     String tokenVerificationUrl;
@@ -45,13 +41,13 @@ public class ProtectedResourceController {
         headers.set("Authentication", token);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
-        body.add("token", token);
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, headers);
 
         // We use the GSON library to deserialize the JSON we obtain from the Verifier.
         Gson gson = new GsonBuilder().create();
         String json = restTemplate.postForObject(tokenVerificationUrl, httpEntity, String.class);
+
         ResponseVerificationToken responseVerificationToken = gson.fromJson(json, ResponseVerificationToken.class);
 
         if (responseVerificationToken.isSuccess() ) {
