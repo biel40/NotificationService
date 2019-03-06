@@ -44,7 +44,7 @@ public class ProtectedResourceController {
 
         HttpEntity<?> httpEntity = new HttpEntity<Object>(body, headers);
 
-        // We use the GSON library to deserialize the JSON we obtain from the Verifier.
+        // We use the GSON library to deserialize the JSON we obtain from the Verifier
         Gson gson = new GsonBuilder().create();
         String json = restTemplate.postForObject(tokenVerificationUrl, httpEntity, String.class);
 
@@ -59,7 +59,7 @@ public class ProtectedResourceController {
             try {
                 InputStream inputStream = new FileInputStream(xml);
 
-                // We copy the Stream to the response's output stream.
+                // We copy the Stream to the response's output stream
                 IOUtils.copy(inputStream, response.getOutputStream());
                 response.flushBuffer();
 

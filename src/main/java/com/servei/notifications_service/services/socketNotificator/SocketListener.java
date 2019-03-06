@@ -1,4 +1,4 @@
-package com.servei.notifications_service.services.socket_notificator;
+package com.servei.notifications_service.services.socketNotificator;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOServer;

@@ -1,4 +1,4 @@
-package com.servei.notifications_service.services.socket_notificator;
+package com.servei.notifications_service.services.socketNotificator;
 
 import org.springframework.stereotype.Component;
 

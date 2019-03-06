@@ -1,10 +1,9 @@
-package com.servei.notifications_service.services.socket_notificator;
+package com.servei.notifications_service.services.socketNotificator;
 
 import com.corundumstudio.socketio.SocketIOClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Repository
 public class Registers {
