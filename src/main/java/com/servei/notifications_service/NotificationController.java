@@ -8,6 +8,7 @@ import com.servei.notifications_service.repositories.*;
 import com.servei.notifications_service.services.NotificationError;
 import com.servei.notifications_service.services.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,8 @@ public class NotificationController {
     private StudentRepository studentRepository;
     private ProviderRepository providerRepository;
     private AbsenceRepository absenceRepository;
+    private final RestTemplate restTemplate;
+    private final NotificationProvider notificationProvider;
 
     @Value("${mail.domain}")
     private String mailDomain;
@@ -34,24 +37,24 @@ public class NotificationController {
     private String databaseUrl;
 
     @Autowired
-    RestTemplate restTemplate;
-
-    @Autowired
     public NotificationController(TeacherRepository teacherRepository,
                                   NotificationRepository notificationRepository,
                                   StudentRepository studentRepository,
                                   AbsenceRepository absenceRepository,
-                                  ProviderRepository providerRepository) {
+                                  ProviderRepository providerRepository, RestTemplate restTemplate,
+                                  @Qualifier("notificationDecorator") NotificationProvider notificationProvider) {
         this.teacherRepository = teacherRepository;
         this.notificationRepository = notificationRepository;
         this.absenceRepository = absenceRepository;
         this.providerRepository = providerRepository;
         this.studentRepository = studentRepository;
+        this.restTemplate = restTemplate;
+        this.notificationProvider = notificationProvider;
     }
 
 
-    @Autowired
-    NotificationProvider mailgunNotificator;
+    
+    
 
     @Autowired
     NotificationProvider socketNotificator;
@@ -59,7 +62,7 @@ public class NotificationController {
     @RequestMapping("/sendmail")
     public void sendmail() {
         Teacher teacher = getTeacher();
-        List<NotificationError> sent = mailgunNotificator.sendNotifications(teacher);
+        List<NotificationError> sent = notificationProvider.sendNotifications(teacher);
 
         if (!sent.isEmpty()){
             // Aquí controlar errores en caso de que la lista no este vacia.

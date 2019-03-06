@@ -2,12 +2,14 @@ package com.servei.notifications_service.services;
 
 import com.servei.notifications_service.nodes.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class NotificationDecorator implements NotificationProvider {
 
     private List<NotificationProvider> allProviders;
