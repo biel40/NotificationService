@@ -5,8 +5,10 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.servei.notifications_service.nodes.Teacher;
+import com.servei.notifications_service.repositories.NotificationRepository;
 import com.servei.notifications_service.services.formaters.Formatter;
 import com.servei.notifications_service.services.formaters.HTMLFormat;
+import com.servei.notifications_service.services.socketNotificator.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,7 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MailgunNotificator implements NotificationProvider {
+public class MailgunNotificator implements NotificationProvider{
+    private String name = "MailGun";
+
+    @Autowired
+    NotificationRepository notificationRepository;
+
 
     @Value("${mailgun.api.key}") private String mailgunAPIkey;
     @Value("${mailgun.api.url}") private String mailgunAPIurl;

@@ -1,5 +1,6 @@
 package com.servei.notifications_service.services;
 
+import com.servei.notifications_service.services.socketNotificator.NotificationProvider;
 import org.springframework.stereotype.Component;
 
 @Component

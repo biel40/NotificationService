@@ -3,11 +3,12 @@ package com.servei.notifications_service.services.socketNotificator;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.servei.notifications_service.nodes.Notification;
 import com.servei.notifications_service.nodes.Teacher;
+import com.servei.notifications_service.repositories.NotificationRepository;
 import com.servei.notifications_service.services.NotificationError;
-import com.servei.notifications_service.services.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -15,24 +16,25 @@ import java.util.Set;
 @Component
 public class SocketNotificator implements NotificationProvider {
 
+    private String name = "SocketIO";
+
     @Autowired
-    Registers registers;
+    private Registers registers;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
 
     public List<NotificationError> sendNotifications(Teacher teacher) {
 
-        System.out.println(teacher);
-        System.out.println(teacher.getNotifications().toString());
-
+        //Get teacher socket by email
         SocketIOClient teacherSocket = registers.getTeacherRegisters().get(teacher.getMail());
         Set<Notification> notificationSet = teacher.getNotifications();
 
-        for(Notification notification : notificationSet){
-            //TODO: Null pointer Exception.
-            teacherSocket.sendEvent("notification", notification);
-            System.out.println("Evento mandado correctamente.");
+        if(teacherSocket != null){
+            teacherSocket.sendEvent("notification", notificationSet);
         }
 
-        return new LinkedList<>();
+        return new ArrayList<>();
     }
 }
