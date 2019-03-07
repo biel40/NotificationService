@@ -1,12 +1,15 @@
 package com.servei.notifications_service.services;
 
+import com.servei.notifications_service.nodes.Notification;
 import com.servei.notifications_service.nodes.Teacher;
+import com.servei.notifications_service.repositories.NotificationRepository;
 import com.servei.notifications_service.services.socketNotificator.NotificationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class NotificationDecorator implements NotificationProvider {
@@ -14,12 +17,8 @@ public class NotificationDecorator implements NotificationProvider {
     @Autowired
     private List<NotificationProvider> allProviders;
 
-//    @Autowired
-//    public NotificationDecorator(List<NotificationProvider> notificationProviders){
-//        if (notificationProviders != null && !notificationProviders.isEmpty()) {
-//            allProviders.addAll(notificationProviders);
-//        }
-//    }
+    @Autowired
+    NotificationRepository notificationRepository;
 
     @Override
     public List<NotificationError> sendNotifications(Teacher teacher) {
@@ -32,6 +31,14 @@ public class NotificationDecorator implements NotificationProvider {
             if (!result.isEmpty()){
                 results.addAll(result);
             }
+
+
+            //Mark notifications as sent
+//            Set<Notification> notificationSet = teacher.getNotifications();
+//            for (Notification notification : notificationSet){
+//                notification.setItWasSent(true);
+//                notificationRepository.save(notification);
+//            }
         }
 
         return results;
