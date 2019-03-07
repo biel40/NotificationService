@@ -13,6 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,11 +32,9 @@ public class ProtectedResourceController {
 
     }
 
-    @RequestMapping("/getProtectedResource")
+    @RequestMapping(value = "/getProtectedResource", method = RequestMethod.GET)
     public void getProtectedResource(HttpServletResponse response,
                                      @RequestHeader("Authorization") String token) throws IOException {
-
-        System.out.println(token);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authentication", token);
