@@ -1,6 +1,5 @@
 package com.servei.notifications_service.services;
 
-import com.servei.notifications_service.nodes.Notification;
 import com.servei.notifications_service.nodes.Teacher;
 import com.servei.notifications_service.repositories.NotificationRepository;
 import com.servei.notifications_service.services.socketNotificator.NotificationProvider;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class NotificationDecorator implements NotificationProvider {

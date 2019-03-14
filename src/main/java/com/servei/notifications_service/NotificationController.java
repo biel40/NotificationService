@@ -66,9 +66,6 @@ public class NotificationController {
         for(Teacher teacher : teachersWithAbsences){
             notificationDecorator.sendNotifications(teacher);
         }
-
-
-
 //
 //        List<NotificationError> sent = notificationProvider.sendNotifications(teacher);
 //
@@ -78,7 +75,7 @@ public class NotificationController {
     }
 
     @RequestMapping("/createTeacher")
-    public Teacher createTeacher() {
+    public void createTeacher() {
 
         teacherRepository.deleteAll();
         notificationRepository.deleteAll();
@@ -141,118 +138,18 @@ public class NotificationController {
         teacher.receiveNotifications(notification2);
 
         teacherRepository.save(teacher);
-
-        return teacher;
     }
 
 
-    @RequestMapping("/getTeacher")
-    public Teacher getTeacher() {
-
-        teacherRepository.deleteAll();
-        notificationRepository.deleteAll();
-        studentRepository.deleteAll();
-        providerRepository.deleteAll();
-        absenceRepository.deleteAll();
-
-        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
-        
-        Absence absence1 = new Absence();
-        absence1.setDate(date.format(dtfDate));
-        absence1.setTime(time.format(dtfTime));
-        absence1.setSubject("Desplegament");
-
-        Absence absence2 = new Absence();
-        absence2.setDate(date.format(dtfDate));
-        absence2.setTime(time.format(dtfTime));
-        absence2.setSubject("DIW");
-
-        Student student1 = new Student();
-        student1.setDNI("4845848468S");
-        student1.setName("Benjamin");
-        student1.setSurname("Cardona");
-
-        Student student2 = new Student();
-        student2.setDNI("4564678468S");
-        student2.setName("Joan Guillem");
-        student2.setSurname("Cabot");
-
-        student1.hasAbsence(absence1);
-        student2.hasAbsence(absence2);
-
-        Notification notification1 = new Notification();
-        notification1.setDate(date.format(dtfDate));
-        notification1.setTime(time.format(dtfTime));
-        notification1.setItWasSent(true);
-
-        notification1.belongsToStudent(student1);
-
-        Notification notification2 = new Notification();
-        notification2.setDate(date.format(dtfDate));
-        notification2.setTime(time.format(dtfTime));
-        notification2.setItWasSent(false);
-
-        notification2.belongsToStudent(student2);
-
-        Teacher teacher = new Teacher();
-        teacher.setDNI("45646969P");
-        teacher.setMail("javiervinasgarcia@gmail.com");
-        teacher.setName("Javi");
-        teacher.setSurname("Viñas");
-        teacher.setPhoneNum("654887548");
-
-
-        teacher.receiveNotifications(notification1);
-        teacher.receiveNotifications(notification2);
-
-        teacherRepository.save(teacher);
-
-        return teacher;
+    @RequestMapping("/getTeachers")
+    public List<Teacher> getTeachers() {
+        return (List<Teacher>) teacherRepository.findAll();
     }
 
-
-    @RequestMapping("/addAbsence")
-    public Teacher addAbsence() {
-
-
-        DateTimeFormatter dtfDate = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        DateTimeFormatter dtfTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
-
-        Absence absence1 = new Absence();
-        absence1.setDate(date.format(dtfDate));
-        absence1.setTime(time.format(dtfTime));
-        absence1.setSubject("Asignatura");
-
-        Student student1 = new Student();
-        student1.setDNI("4845848468S");
-        student1.setName("Benjamin");
-        student1.setSurname("Cardona");
-
-        student1.hasAbsence(absence1);
-
-        Notification notification1 = new Notification();
-        notification1.setDate(date.format(dtfDate));
-        notification1.setTime(time.format(dtfTime));
-        notification1.setItWasSent(false);
-
-        notification1.belongsToStudent(student1);
-
-        Teacher teacher = teacherRepository.findByMail("javiervinasgarcia@gmail.com");
-
-        teacher.receiveNotifications(notification1);
-
-        teacherRepository.save(teacher);
-
-        return teacher;
+    @RequestMapping("/getTeacherByName")
+    public Teacher getTeachers(String name) {
+        return teacherRepository.findByName(name);
     }
-
 
     @RequestMapping("/getMockTeacher")
     public void getMockTeacher() {
